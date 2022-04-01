@@ -7,10 +7,10 @@
 use std::mem::size_of_val;
 fn main() {
     let c1 = 'a';
-    assert_eq!(size_of_val(&c1),1); 
+    assert_eq!(size_of_val(&c1),4); 
 
     let c2 = '中';
-    assert_eq!(size_of_val(&c2),3); 
+    assert_eq!(size_of_val(&c2),4); 
 
     println!("Success!")
 } 
@@ -20,7 +20,7 @@ fn main() {
 ```rust, editable
 
 fn main() {
-    let c1 = "中";
+    let c1 = '中';
     print_char(c1);
 } 
 
@@ -37,7 +37,7 @@ fn print_char(c : char) {
 fn main() {
     let _f: bool = false;
 
-    let t = true;
+    let t = false;
     if !t {
         println!("Success!")
     }
@@ -49,7 +49,7 @@ fn main() {
 
 fn main() {
     let f = true;
-    let t = true && false;
+    let t = true || false;
     assert_eq!(t, f);
 
     println!("Success!")
@@ -63,10 +63,10 @@ fn main() {
 
 // 让代码工作，但不要修改 `implicitly_ret_unit` !
 fn main() {
-    let _v: () = ();
+    let v0: () = ();
 
     let v = (2, 3);
-    assert_eq!(v, implicitly_ret_unit());
+    assert_eq!(v0, implicitly_ret_unit());
 
     println!("Success!")
 }
@@ -88,7 +88,7 @@ fn explicitly_ret_unit() -> () {
 use std::mem::size_of_val;
 fn main() {
     let unit: () = ();
-    assert!(size_of_val(&unit) == 4);
+    assert!(size_of_val(&unit) == 0);
 
     println!("Success!")
 }

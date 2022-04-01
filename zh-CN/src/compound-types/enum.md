@@ -26,8 +26,8 @@ enum Number2 {
 
 fn main() {
     // 通过 `as` 可以将枚举值强转为整数类型
-    assert_eq!(Number::One, Number1::One);
-    assert_eq!(Number1::One, Number2::One);
+    assert_eq!(Number::One as u8, Number1::One as u8);
+    assert_eq!(Number1::One as u8, Number2::One as u8);
 } 
 ```
 
@@ -43,8 +43,8 @@ enum Message {
 }
 
 fn main() {
-    let msg1 = Message::Move{__}; // 使用x = 1, y = 2 来初始化
-    let msg2 = Message::Write(__); // 使用 "hello, world!" 来初始化
+    let msg1 = Message::Move{ x: 1, y: 2}; // 使用x = 1, y = 2 来初始化
+    let msg2 = Message::Write(String::from("hello, world!")); // 使用 "hello, world!" 来初始化
 } 
 ```
 
@@ -62,7 +62,7 @@ enum Message {
 fn main() {
     let msg = Message::Move{x: 1, y: 2};
 
-    if let Message::Move{__} = msg {
+    if let Message::Move{ x: a, y: b } = msg {
         assert_eq!(a, b);
     } else {
         panic!("不要让这行代码运行！");
@@ -83,7 +83,7 @@ enum Message {
 }
 
 fn main() {
-    let msgs: __ = [
+    let msgs: [Message; 3] = [
         Message::Quit,
         Message::Move{x:1, y:3},
         Message::ChangeColor(255,255,0)
@@ -108,8 +108,9 @@ fn main() {
     let six = plus_one(five);
     let none = plus_one(None);
 
-    if let __ = six {
-        println!("{}", n)
+    if let Some(n) = six {
+        println!("{}", n);
+        return
     } 
         
     panic!("不要让这行代码运行！");
@@ -117,8 +118,8 @@ fn main() {
 
 fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
-        __ => None,
-        __ => Some(i + 1),
+        None => None,
+        Some(i) => Some(i + 1),
     }
 }
 ```
@@ -156,7 +157,7 @@ impl List {
     fn len(&self) -> u32 {
         match *self {
             // 这里我们不能拿走 tail 的所有权，因此需要获取它的引用
-            Cons(_, __ tail) => 1 + tail.len(),
+            Cons(head, ref tail) => 1 + tail.len(),
             // 空链表的长度为 0
             Nil => 0
         }
@@ -167,7 +168,7 @@ impl List {
         match *self {
             Cons(head, ref tail) => {
                 // 递归生成字符串
-                format!("{}, {}", head, tail.__())
+                format!("{}, {}", head, tail.1())
             },
             Nil => {
                 format!("Nil")

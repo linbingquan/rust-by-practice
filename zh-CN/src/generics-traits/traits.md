@@ -93,9 +93,15 @@ trait Hello {
 
 struct Student {}
 impl Hello for Student {
+    fn say_something() -> String {
+        String::from("I'm a good student")
+    }
 }
 struct Teacher {}
 impl Hello for Teacher {
+    fn say_something() -> String {
+        String::from("I'm not a bad teacher")
+    }
 }
 
 fn main() {
@@ -137,6 +143,7 @@ impl Inches {
 
 // 添加一些属性让代码工作
 // 不要修改其它代码！
+#[derive(Debug,PartialEq,PartialOrd)]
 struct Seconds(i32);
 
 fn main() {
@@ -175,7 +182,9 @@ use std::ops;
 // 实现 fn multiply 方法
 // 如上所述，`+` 需要 `T` 类型实现 `std::ops::Add` 特征
 // 那么, `*` 运算符需要实现什么特征呢? 你可以在这里找到答案: https://doc.rust-lang.org/core/ops/
-fn multipl
+fn multipl<T: ops:Mul<Outut = T>>(x: T, y: T) -> T {
+    x * y
+}
 
 fn main() {
     assert_eq!(6, multiply(2u8, 3u8));
@@ -194,8 +203,10 @@ use std::ops;
 struct Foo;
 struct Bar;
 
+#[derive(Debug, PartialEq)]
 struct FooBar;
 
+#[derive(Debug, PartialEq)]
 struct BarFoo;
 
 // 下面的代码实现了自定义类型的相加： Foo + Bar = FooBar
@@ -273,15 +284,17 @@ fn main() {
         content: "Weibo seems to be worse than Tweet".to_string(),
     };
 
-    summary(post);
-    summary(weibo);
+    summary(&post);
+    summary(&weibo);
 
     println!("{:?}", post);
     println!("{:?}", weibo);
 }
 
 // 在下面实现 `fn summary` 函数
-
+fn summary(t: &impl Summary) {
+    t.summarize();
+}
 ```
 
 ### 使用特征作为函数返回值
@@ -312,11 +325,11 @@ impl Animal for Cow {
 
 // 返回一个类型，该类型实现了 Animal 特征，但是我们并不能在编译期获知具体返回了哪个类型
 // 修复这里的错误，你可以使用虚假的随机，也可以使用特征对象
-fn random_animal(random_number: f64) -> impl Animal {
+fn random_animal(random_number: f64) -> Box<dyn Animal> {
     if random_number < 0.5 {
-        Sheep {}
+        Box::new(Sheep {})
     } else {
-        Cow {}
+        Box::new(Cow {})
     }
 }
 
@@ -339,7 +352,14 @@ fn main() {
 }
 
 // 通过两种方法使用特征约束来实现 `fn sum`
-fn sum<T>(x: T, y: T) -> T {
+fn sum<T: std::ops::Add<Output = T>>(x: T, y: T) -> T {
+    x + y
+}
+
+fn sum<T>(x: T, y: T) -> T
+where
+    T: std::ops::Add<Output = T>,
+{
     x + y
 }
 ```
@@ -371,6 +391,7 @@ impl<T: std::fmt::Debug + PartialOrd> Pair<T> {
     }
 }
 
+#[derive(Debug, PartialEq, PartialOrd)]
 struct Unit(i32);
 
 fn main() {
@@ -416,8 +437,8 @@ fn example1() {
     }
 
     let mut cacher = Cacher::new(|x| x+1);
-    assert_eq!(cacher.value(10), __);
-    assert_eq!(cacher.value(15), __);
+    assert_eq!(cacher.value(10), 11);
+    assert_eq!(cacher.value(15), 11);
 }
 
 
@@ -453,8 +474,8 @@ fn example2() {
     }
 
     let mut cacher = Cacher::new(|x| x+1);
-    assert_eq!(cacher.value(20), __);
-    assert_eq!(cacher.value(25), __);
+    assert_eq!(cacher.value(20), 21);
+    assert_eq!(cacher.value(25), 21);
 }
 
 

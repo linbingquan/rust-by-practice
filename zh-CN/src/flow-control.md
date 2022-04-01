@@ -10,9 +10,9 @@ fn main() {
 
     if n < 0 {
         println!("{} is negative", n);
-    } __ n > 0 {
+    } else if n > 0 {
         println!("{} is positive", n);
-    } __ {
+    } else {
         println!("{} is zero", n);
     }
 } 
@@ -33,7 +33,7 @@ fn main() {
         } else {
             println!("数字太大，我们得让它减半");
 
-            n / 2.0 ;
+            n / 2.0
         }
 
     println!("{} -> {}", n, big_n);
@@ -46,7 +46,7 @@ fn main() {
 ```rust,editable
 
 fn main() {
-    for n in 1..=100 { // 修改此行，让代码工作
+    for n in 1..100 { // 修改此行，让代码工作
         if n == 100 {
             panic!("NEVER LET THIS RUN")
         }
@@ -61,7 +61,7 @@ fn main() {
 // 修复错误，不要新增或删除代码行
 fn main() {
     let names = [String::from("liming"),String::from("hanmeimei")];
-    for name in names {
+    for name in &names {
         // do something with name...
     }
 
@@ -83,7 +83,7 @@ fn main() {
     let a = [4,3,2,1];
 
     // 通过索引和值的方式迭代数组 `a` 
-    for (i,v) in a.__ {
+    for (i,v) in a.iter().enumerate() {
         println!("第{}个元素是{}",i+1,v);
     }
 }
@@ -100,7 +100,7 @@ fn main() {
     let mut n = 1;
 
     // 当条件为真时，不停的循环
-    while n __ 10 {
+    while n < 10 {
         if n % 15 == 0 {
             println!("fizzbuzz");
         } else if n % 3 == 0 {
@@ -112,7 +112,7 @@ fn main() {
         }
 
 
-        __;
+        n += 1;
     }
 
     println!("n 的值是 {}, 循环结束",n);
@@ -128,7 +128,7 @@ fn main() {
     let mut n = 0;
     for i in 0..=100 {
        if n == 66 {
-           __
+           break;
        }
        n += 1;
     }
@@ -146,10 +146,10 @@ fn main() {
     for i in 0..=100 {
        if n != 66 {
            n+=1;
-           __;
+           continue;
        }
        
-       __
+       break;
     }
 
     assert_eq!(n, 66);
@@ -176,7 +176,7 @@ fn main() {
             println!("three");
 
             // 跳过当此循环的剩余代码
-            __;
+            continue;
         }
 
         println!("{}", count);
@@ -184,7 +184,7 @@ fn main() {
         if count == 5 {
             println!("OK, that's enough");
 
-            __;
+            break;
         }
     }
 
@@ -203,7 +203,7 @@ fn main() {
         counter += 1;
 
         if counter == 10 {
-            __;
+            break conter * 2;
         }
     };
 
@@ -238,7 +238,7 @@ fn main() {
         }
     }
 
-    assert!(count == __)
+    assert!(count == 30)
 }
 ```
 

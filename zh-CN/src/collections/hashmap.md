@@ -16,21 +16,21 @@ fn main() {
     let mut scores = HashMap::new();
     scores.insert("Sunface", 98);
     scores.insert("Daniel", 95);
-    scores.insert("Ashley", 69.0);
-    scores.insert("Katie", "58");
+    scores.insert("Ashley", 69);
+    scores.insert("Katie", 58);
 
     // get 返回一个 Option<&V> 枚举值
     let score = scores.get("Sunface");
-    assert_eq!(score, Some(98));
+    assert_eq!(score, Some(&8));
 
     if scores.contains_key("Daniel") {
         // 索引返回一个值 V
         let score = scores["Daniel"];
-        assert_eq!(score, __);
+        assert_eq!(score, 95);
         scores.remove("Daniel");
     }
 
-    assert_eq!(scores.len(), __);
+    assert_eq!(scores.len(), 3);
 
     for (name, score) in scores {
         println!("The score of {} is {}", name, score)
@@ -57,7 +57,8 @@ fn main() {
 
     // 使用两种方法实现 team_map2
     // 提示:其中一种方法是使用 `collect` 方法
-    let teams_map2...
+    let teams_map2 = teams.into_iter().collect();
+    let teams_map2 = HashMap::from(teams);
 
     assert_eq!(teams_map1, teams_map2);
 
@@ -78,16 +79,16 @@ fn main() {
     // 查询指定的 key, 若不存在时，则插入新的 kv 值
     player_stats.entry("health").or_insert(100);
 
-    assert_eq!(player_stats["health"], __);
+    assert_eq!(player_stats["health"], 100);
 
     // 通过函数来返回新的值
     player_stats.entry("health").or_insert_with(random_stat_buff);
-    assert_eq!(player_stats["health"], __);
+    assert_eq!(player_stats["health"], 100);
 
     let health = player_stats.entry("health").or_insert(50);
-    assert_eq!(health, __);
+    assert_eq!(health, 100);
     *health -= 50;
-    assert_eq!(*health, __);
+    assert_eq!(*health, 50);
 
     println!("Success!")
 }
@@ -118,6 +119,7 @@ fn random_stat_buff() -> u8 {
 // 提示: `derive` 是实现一些常用特征的好办法
 use std::collections::HashMap;
 
+#[derive(Hash, Debug, Eq, PartialEq)]
 struct Viking {
     name: String,
     country: String,
@@ -191,7 +193,7 @@ fn main() {
   m1.insert(v1, v1);
   println!("v1 is still usable after inserting to hashmap : {}", v1);
 
-  let v2 = "hello".to_string();
+  let v2 = "hello";
   let mut m2 = HashMap::new();
   // 所有权在这里发生了转移
   m2.insert(v2, v1);

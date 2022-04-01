@@ -1,6 +1,6 @@
-//! # Doc comments
-//! 
-//! A library for showing how to use doc comments
+//! # 文档注释
+//!
+//! 该库用于文档注释的教学
 
 pub mod compute;
 
@@ -18,8 +18,6 @@ pub fn add_one(x: i32) -> i32 {
     x + 1
 }
 
-
-
 /** Add two to the given value and return a new value
 
 # Examples
@@ -35,7 +33,6 @@ pub fn add_two(x: i32) -> i32 {
     x + 2
 }
 
-
 /// Add three to the given value and return a [`Option`] type
 pub fn add_three(x: i32) -> Option<i32> {
     Some(x + 3)
@@ -50,5 +47,3 @@ mod a {
 }
 
 struct MySpecialFormatter;
-
-

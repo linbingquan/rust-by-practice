@@ -9,11 +9,11 @@
 // 1. 不要使用 `to_string()`
 // 2. 不要添加/删除任何代码行
 fn main() {
-    let mut s: String = "hello, ";
+    let mut s: String = String::from("hello, ");
     s.push_str("world".to_string());
-    s.push(__);
+    s.push("!");
 
-    move_ownership(s);
+    move_ownership(s.clone);
 
     assert_eq!(s, "hello, world!");
 
@@ -39,13 +39,13 @@ fn move_ownership(s: String) {
 fn main() {  
    let mut s = String::from("hello, world");
 
-   let slice1: &str = __; // 使用两种方法
+   let slice1: &str = &s; // 使用两种方法
    assert_eq!(slice1, "hello, world");
 
-   let slice2 = __;
+   let slice2 = &s[0..5];
    assert_eq!(slice2, "hello");
 
-   let slice3: __ = __; 
+   let slice3: &mut String = &mut s; 
    slice3.push('!');
    assert_eq!(slice3, "hello, world!");
 
@@ -97,7 +97,7 @@ fn main() {
     assert_eq!(slice2, "世");
     
     // 迭代 s 中的所有字符
-    for (i, c) in s.__ {
+    for (i, c) in s.chars().enumerate() {
         if i == 7 {
             assert_eq!(c, '世')
         }
@@ -131,12 +131,12 @@ fn main() {
 // 填空
 fn main() {
     let mut s = String::new();
-    __;
+    s.push("hello");
 
     let v = vec![104, 101, 108, 108, 111];
 
     // 将字节数组转换成 String
-    let s1 = __;
+    let s1 = String.from_utf8(v).unwrap();
     
     
     assert_eq!(s, s1);
@@ -159,7 +159,7 @@ fn main() {
 // 25
 // 循环中不会发生任何内存分配
 fn main() {
-    let mut s = String::new();
+    let mut s = String::with_capacity();
 
     println!("{}", s.capacity());
 
@@ -184,9 +184,9 @@ fn main() {
     // 阻止 String 的数据被自动 drop
     let mut story = mem::ManuallyDrop::new(story);
 
-    let ptr = story.__();
-    let len = story.__();
-    let capacity = story.__();
+    let ptr = story.as_mut_ptr();
+    let len = story.len();
+    let capacity = story.capacity();
 
     assert_eq!(16, len);
 

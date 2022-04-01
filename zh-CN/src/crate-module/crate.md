@@ -46,7 +46,7 @@ edition = "2021"
 /* 使用你的答案填空 */
 
 // Q: package 1# 和 2# 的区别是什么 ?
-// A: __
+// A: 一个是可以执行文件入口是src/main.rs 另外一个是库文件入口是src/lib.rs
 ```
 
 
@@ -62,7 +62,7 @@ edition = "2021"
 /* 填空 */
 
 // Q: package `hello-package1` 中的库包名称是?
-// A: __
+// A: hello-package1
 ```
 
 
@@ -73,8 +73,8 @@ edition = "2021"
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
-│   ├── __
-│   └── __
+│   ├── main.rs
+│   └── lib.rs
 ```
 
 在上一个步骤后，我们的 `hello-package` 中已经存在两个包：一个二进制包和一个库包，两个包的名称都与 package 相同：`hello-package`。
@@ -92,11 +92,11 @@ edition = "2021"
 ├── Cargo.toml
 ├── Cargo.lock
 ├── src
-│   ├── __
-│   ├── __
-│   └── __
-│       └── __
-│       └── __
+│   ├── main.rs
+│   ├── lib.rs
+│   └── bin
+│       └── main1.rs
+│       └── main2.rs
 ├── tests # 存放集成测试文件的目录
 │   └── some_integration_tests.rs
 ├── benches # 存放 benchmark 文件的目录dir for benchmark files

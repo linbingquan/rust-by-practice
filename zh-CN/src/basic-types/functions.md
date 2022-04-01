@@ -10,7 +10,7 @@ fn main() {
     assert_eq!(s, 3);
 }
 
-fn sum(x, y: i32) {
+fn sum(x: i32, y: i32) -> i32 {
     x + y;
 }
 ```
@@ -23,7 +23,7 @@ fn main() {
 }
 
 // 使用另一个类型来替代 i32
-fn print() -> i32 {
+fn print() -> () {
    println!("hello,world");
 }
 ```
@@ -39,7 +39,7 @@ fn main() {
 
 fn never_return() -> ! {
     // 实现这个函数，不要修改函数签名!
-    
+    panic!()
 }
 ```
 
@@ -66,7 +66,11 @@ fn get_option(tp: u8) -> Option<i32> {
 
 // 使用三种方法实现以下发散函数
 fn never_return_fn() -> ! {
-    
+    panic!()
+    unimplemented!()
+    loop {
+        std::thread::sleep(std::time::Duration::from_sec(1))
+    }
 }
 ```
 
@@ -75,7 +79,7 @@ fn never_return_fn() -> ! {
 
 fn main() {
     // 填空
-    let b = __;
+    let b = false;
 
     let v = match b {
         true => 1,

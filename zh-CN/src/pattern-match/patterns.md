@@ -9,7 +9,7 @@ fn match_number(n: i32) {
         // 匹配一个单独的值
         1 => println!("One!"),
         // 使用 `|` 填空，不要使用 `..` 或 `..=`
-        __ => println!("match 2 -> 5"),
+        2 | 3 | 4 | 5 => println!("match 2 -> 5"),
         // 匹配一个闭区间的数值序列
         6..=10 => {
             println!("match 6 -> 10")
@@ -31,7 +31,7 @@ struct Point {
 
 fn main() {
     // 填空，让 p 匹配第二个分支
-    let p = Point { x: __, y: __ };
+    let p = Point { x: 0, y: 10 };
 
     match p {
         Point { x, y: 0 } => println!("On the x axis at {}", x),
@@ -56,9 +56,9 @@ fn main() {
 
     match msg {
         Message::Hello {
-            id:  3..=7,
+            id: id @ 3..=7,
         } => println!("id 值的范围在 [3, 7] 之间: {}", id),
-        Message::Hello { id: newid@10 | 11 | 12 } => {
+        Message::Hello { id: newid@(10 | 11 | 12) } => {
             println!("id 值的范围在 [10, 12] 之间: {}", newid)
         }
         Message::Hello { id } => println!("Found some other id: {}", id),
@@ -74,7 +74,7 @@ fn main() {
     let num = Some(4);
     let split = 5;
     match num {
-        Some(x) __ => assert!(x < split),
+        Some(x) if x < split => assert!(x < split),
         Some(x) => assert!(x >= split),
         None => (),
     }
@@ -89,7 +89,7 @@ fn main() {
     let numbers = (2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048);
 
     match numbers {
-        __ => {
+        (first, .., last) => {
            assert_eq!(first, 2);
            assert_eq!(last, 2048);
         }
@@ -107,7 +107,7 @@ fn main() {
     let r = &mut v;
 
     match r {
-       &mut value => value.push_str(" world!") 
+       value => value.push_str(" world!") 
     }
 }
 ````

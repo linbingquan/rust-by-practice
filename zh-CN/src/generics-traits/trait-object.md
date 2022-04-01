@@ -60,8 +60,13 @@ fn main() {
 }   
 
 // 实现以下函数
-fn hatch_a_bird...
-
+fn hatch_a_bird(arg: i32) -> Box<dyn Bird> {
+    if arg == 1 {
+        Box::new(Swan {})
+    } else {
+        Box::new(Duck {})
+    }
+}
 ```
 ## 在数组中使用特征对象
 2. 🌟🌟
@@ -97,7 +102,7 @@ impl Bird for Swan {
 
 fn main() {
     // 填空
-    let birds __;
+    let birds: [Box<dyn Bird>; 2] = [Box::new(Duck {}), Box::new(Swan {})];
 
     for bird in birds {
         bird.quack();
@@ -136,7 +141,7 @@ fn main() {
     let y = 8u8;
 
     // draw x
-    draw_with_box(__);
+    draw_with_box(Box::new(x));
 
     // draw y
     draw_with_ref(&y);
@@ -148,7 +153,7 @@ fn draw_with_box(x: Box<dyn Draw>) {
     x.draw();
 }
 
-fn draw_with_ref(x: __) {
+fn draw_with_ref(x: &dyn Draw) {
     x.draw();
 }
 ```
@@ -172,10 +177,14 @@ impl Foo for String {
 }
 
 // 通过泛型实现以下函数
-fn static_dispatch...
+fn static_dispatch<T: Foo>(foo: T) -> String {
+    foo.method()
+}
 
 // 通过特征对象实现以下函数
-fn dynamic_dispatch...
+fn dynamic_dispatch(foo: &dyn Foo) -> String {
+    foo.method()
+}
 
 fn main() {
     let x = 5u8;
@@ -204,22 +213,43 @@ trait MyTrait {
 }
 
 impl MyTrait for u32 {
-    fn f(&self) -> Self { 42 }
+    fn f(&self) -> u32 { 42 }
 }
 
 impl MyTrait for String {
-    fn f(&self) -> Self { self.clone() }
+    fn f(&self) -> String { self.clone() }
 }
 
-fn my_function(x: Box<dyn MyTrait>)  {
+fn my_function(x: impl MyTrait) -> impl MyTrait  {
+    x.f()
+}
+
+fn main() {
+    my_function(13_u32);
+    my_function(String::from("abc"));
+}
+
+// ========
+
+trait MyTrait {
+    fn f(&self) -> Box<dyn MyTrait>;
+}
+
+impl MyTrait for u32 {
+    fn f(&self) -> Box<dyn MyTrait> { Box::new(42) }
+}
+
+impl MyTrait for String {
+    fn f(&self) -> Box<dyn MyTrait> { Box::new(self.clone()) }
+}
+
+fn my_function(x: Box<dyn MyTrait>) -> Box<dyn MyTrait> {
     x.f()
 }
 
 fn main() {
     my_function(Box::new(13_u32));
     my_function(Box::new(String::from("abc")));
-
-    println!("Success!")
 }
 ```
 

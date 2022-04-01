@@ -31,7 +31,8 @@ fn main() {
 fn main() {
    let v = {
        let mut x = 1;
-       x += 2
+       x += 2;
+       x
    };
 
    assert_eq!(v, 3);
@@ -42,7 +43,10 @@ fn main() {
 ```rust,editable
 
 fn main() {
-   let v = (let x = 3);
+   let v = {
+     let x = 3;
+     x
+   }
 
    assert!(v == 3);
 }
@@ -57,7 +61,7 @@ fn main() {
 }
 
 fn sum(x: i32, y: i32) -> i32 {
-    x + y;
+    x + y
 }
 ```
 

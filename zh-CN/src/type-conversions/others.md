@@ -15,13 +15,16 @@ struct Point {
 
 impl fmt::Display for Point {
     // 实现 fmt 方法
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "The point is ({}, {})", self.x, self.y)
+    }
 }
 
 fn main() {
     let origin = Point { x: 0, y: 0 };
     // 填空
-    assert_eq!(origin.__, "The point is (0, 0)");
-    assert_eq!(format!(__), "The point is (0, 0)");
+    assert_eq!(origin.to_string(), "The point is (0, 0)");
+    assert_eq!(format!("{}", origin), "The point is (0, 0)");
 
     println!("Success!")
 }
@@ -33,9 +36,9 @@ fn main() {
 // 为了使用 `from_str` 方法, 你需要引入该特征到当前作用域中
 use std::str::FromStr;
 fn main() {
-    let parsed: i32 = "5".__.unwrap();
-    let turbo_parsed = "10".__.unwrap();
-    let from_str = __.unwrap();
+    let parsed: i32 = "5".parse().unwrap();
+    let turbo_parsed = "10".parse::<i32>().unwrap();
+    let from_str = i32::from_str("20").unwrap();
     let sum = parsed + turbo_parsed + from_str;
     assert_eq!(sum, 35);
 
@@ -72,7 +75,7 @@ impl FromStr for Point {
 fn main() {
     // 使用两种方式填空
     // 不要修改其它地方的代码
-    let p = __;
+    let p = Point::from_str("(3,4)");
     assert_eq!(p.unwrap(), Point{ x: 3, y: 4} );
 
     println!("Success!")

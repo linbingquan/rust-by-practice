@@ -8,9 +8,9 @@ Rust 并没有为基本类型提供隐式的类型转换( coercion )，但是我
 fn main() {
     let decimal = 97.123_f32;
 
-    let integer: __ = decimal as u8;
+    let integer: u8 = decimal as u8;
 
-    let c1: char = decimal as char;
+    let c1: char = decimal as u8 as char;
     let c2 = integer as char;
 
     assert_eq!(integer, 'b' as u8);
@@ -21,6 +21,7 @@ fn main() {
 
 2. 🌟🌟 默认情况下, 数值溢出会导致编译错误，但是我们可以通过添加一行全局注解的方式来避免编译错误(溢出还是会发生)
 ```rust,editable
+#![allow(overflowing_literals)]
 fn main() {
     assert_eq!(u8::MAX, 255);
     // 如上所示，u8 类型允许的最大值是 255.
@@ -37,19 +38,19 @@ fn main() {
 
 ```rust,editable
 fn main() {
-    assert_eq!(1000 as u16, __);
+    assert_eq!(1000 as u16, 1000);
 
-    assert_eq!(1000 as u8, __);
+    assert_eq!(1000 as u8, 232);
 
     // 事实上，之前说的规则对于正整数而言，就是如下的取模
     println!("1000 mod 256 is : {}", 1000 % 256);
 
-    assert_eq!(-1_i8 as u8, __);
+    assert_eq!(-1_i8 as u8, 255);
     
 
     // 从 Rust 1.45 开始，当浮点数超出目标整数的范围时，转化会直接取正整数取值范围的最大或最小值
-    assert_eq!(300.1_f32 as u8, __);
-    assert_eq!(-100.1_f32 as u8, __);
+    assert_eq!(300.1_f32 as u8, 255);
+    assert_eq!(-100.1_f32 as u8, 0);
     
 
     // 上面的浮点数转换有一点性能损耗，如果大家对于某段代码有极致的性能要求，
@@ -73,12 +74,12 @@ fn main() {
 fn main() {
     let mut values: [i32; 2] = [1, 2];
     let p1: *mut i32 = values.as_mut_ptr();
-    let first_address: usize = p1 __; 
+    let first_address: usize = p1 as usize; 
     let second_address = first_address + 4; // 4 == std::mem::size_of::<i32>()
-    let p2: *mut i32 = second_address __; // p2 指向 values 数组中的第二个元素
+    let p2: *mut i32 = second_address as *mut i32; // p2 指向 values 数组中的第二个元素
     unsafe {
         // 将第二个元素加 1
-        __
+        *p2 += 1;
     }
     
     assert_eq!(values[1], 3);
@@ -96,7 +97,7 @@ fn main() {
     let a: *const [u64] = &arr;
     let b = a as *const [u8];
     unsafe {
-        assert_eq!(std::mem::size_of_val(&*b), __)
+        assert_eq!(std::mem::size_of_val(&*b), 13)
     }
 }
 ```

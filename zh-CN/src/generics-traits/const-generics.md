@@ -76,14 +76,14 @@ struct Array<T, const N: usize> {
 
 fn main() {
     let arrays = [
-        Array{
+        Array {
             data: [1, 2, 3],
         },
         Array {
-            data: [1.0, 2.0, 3.0],
+            data: [1, 2, 3],
         },
         Array {
-            data: [1, 2]
+            data: [1, 2, 4]
         }
     ];
 }
@@ -93,7 +93,7 @@ fn main() {
 ```rust,editable
 
 // 填空
-fn print_array<__>(__) {
+fn print_array<T: std::fmt::Debug, const N: usize>(arr: [T; N]) {
     println!("{:?}", arr);
 }
 fn main() {

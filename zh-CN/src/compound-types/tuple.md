@@ -7,7 +7,7 @@ fn main() {
     // 元组的成员还可以是一个元组
     let _t1: (u8, (i16, u32)) = (0, (-1, 1));
     // 填空让代码工作
-    let t: (u8, __, i64, __, __) = (1u8, 2u16, 3i64, "hello", String::from(", world"));
+    let _t: (u8, u16, i64, &str, String) = (1u8, 2u16, 3i64, "hello", String::from(", world"));
 }
 ```
 
@@ -17,7 +17,7 @@ fn main() {
 // 修改合适的地方，让代码工作
 fn main() {
     let t = ("i", "am", "sunface");
-    assert_eq!(t.1, "sunface");
+    assert_eq!(t.1, "am");
 }
 ```
 
@@ -26,7 +26,7 @@ fn main() {
 
 // 修复代码错误
 fn main() {
-    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13);
+    let too_long_tuple = (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12);
     println!("too long tuple: {:?}", too_long_tuple);
 }
 ```
@@ -38,7 +38,7 @@ fn main() {
     let tup = (1, 6.4, "hello");
 
     // 填空
-    let __ = tup;
+    let (x, z, y) = tup;
 
     assert_eq!(x, 1);
     assert_eq!(y, "hello");
@@ -52,7 +52,7 @@ fn main() {
     let (x, y, z);
 
     // 填空
-    __ = (1, 2, 3);
+    (y, z, x) = (1, 2, 3);
     
     assert_eq!(x, 3);
     assert_eq!(y, 1);
@@ -65,7 +65,7 @@ fn main() {
 
 fn main() {
     // 填空，需要稍微计算下
-    let (x, y) = sum_multiply(__);
+    let (x, y) = sum_multiply((2, 3));
 
     assert_eq!(x, 5);
     assert_eq!(y, 6);

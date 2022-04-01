@@ -3,7 +3,7 @@
 
 ```rust,editable
 use std::fmt::Result;
-use std::io::Result;
+use std::io::Result as IoResult;
 
 fn main() {}
 ```
@@ -14,7 +14,8 @@ fn main() {}
 
 // 使用两种方式填空
 // 不要添加新的代码行
-use std::collections::__;
+// use std::collections::{BTreeMap, HashMap, HashSet};
+use std::collections::*;
 
 fn main() {
     let _c1:HashMap<&str, i32> = HashMap::new();

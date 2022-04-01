@@ -35,10 +35,12 @@ fn main() {
     // 使用两种方式修复错误
     // 1. 哪个类型实现 From 特征 : impl From<char> for ? , 你可以查看一下之前提到的文档，来找到合适的类型
     // 2. 上一章节中介绍过的某个关键字
-    let i3: i32 = 'a'.into();
+    let i3: u32 = 'a'.into();
+    let i3: u32 = 'a' as u32 ;
 
     // 使用两种方法来解决错误
-    let s: String = 'a' as String;
+    let s: String = 'a'.into();
+    let s: String = String::from('a');
 
     println!("Success!")
 }
@@ -58,14 +60,17 @@ struct Number {
 
 impl From<i32> for Number {
     // 实现 `from` 方法
+    fn from(value: i32) -> Self {
+        Self { value }
+    }
 }
 
 // 填空
 fn main() {
-    let num = __(30);
+    let num = Number::from(30);
     assert_eq!(num.value, 30);
 
-    let num: Number = __;
+    let num: Number = 30.into();
     assert_eq!(num.value, 30);
 
     println!("Success!")
@@ -86,10 +91,16 @@ enum CliError {
 
 impl From<io::Error> for CliError {
     // 实现 from 方法
+    fn from(error: io::Error) -> Self {
+        Self::IoError(error)
+    }
 }
 
 impl From<num::ParseIntError> for CliError {
     // 实现 from 方法
+    fn from(error: num::ParseIntError) -> Self {
+        Self::ParseError(error)
+    }
 }
 
 fn open_and_parse_file(file_name: &str) -> Result<i32, CliError> {
@@ -121,7 +132,7 @@ fn main() {
 
     // Into 特征拥有一个方法`into`,
     // 因此 TryInto 有一个方法是 ?
-    let n: u8 = match n.__() {
+    let n: u8 = match n.try_into() {
         Ok(n) => n,
         Err(e) => {
             println!("there is an error when converting: {:?}, but we catch it", e.to_string());
@@ -129,7 +140,7 @@ fn main() {
         }
     };
 
-    assert_eq!(n, __);
+    assert_eq!(n, 0);
 
     println!("Success!")
 }
@@ -159,9 +170,9 @@ fn main() {
 
     // 填空
     let result: Result<EvenNum, ()> = 8i32.try_into();
-    assert_eq!(result, __);
+    assert_eq!(result, Ok(EvenNum(8)));
     let result: Result<EvenNum, ()> = 5i32.try_into();
-    assert_eq!(result, __);
+    assert_eq!(result, Err(()));
 
     println!("Success!")
 }

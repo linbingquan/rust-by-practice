@@ -5,8 +5,18 @@
 
 fn main() {
     // 使用尽可能多的方法来通过编译
-    let x = String::from("hello, world");
+    let x = &String::from("hello, world");
     let y = x;
+
+    let x = String::from("hello, world");
+    let y = x.clone();
+
+    let x = "hello, world";
+    let y = x;
+
+    let x = 42;
+    let y = x;
+
     println!("{},{}",x,y);
 }
 ```
@@ -22,8 +32,9 @@ fn main() {
 }
 
 // 只能修改下面的代码!
-fn take_ownership(s: String) {
+fn take_ownership(s: String) -> String{
     println!("{}", s);
+    s
 }
 ```
 
@@ -41,7 +52,7 @@ fn give_ownership() -> String {
     let s = String::from("hello, world");
     // convert String to Vec
     // 将 String 转换成 Vec 类型
-    let _s = s.into_bytes();
+    let _s = s.as_bytes();
     s
 }
 ```
@@ -52,13 +63,13 @@ fn give_ownership() -> String {
 fn main() {
     let s = String::from("hello, world");
 
-    print_str(s);
+    print_str(s.clone());
 
     println!("{}", s);
 }
 
 fn print_str(s: String)  {
-    println!("{}",s)
+    println!("{}", s)
 }
 ```
 
@@ -66,8 +77,8 @@ fn print_str(s: String)  {
 ```rust, editable
 // 不要使用 clone，使用 copy 的方式替代
 fn main() {
-    let x = (1, 2, (), "hello".to_string());
-    let y = x.clone();
+    let x = (1, 2, (), "hello");
+    let y = x;
     println!("{:?}, {:?}", x, y);
 }
 ```
@@ -82,7 +93,7 @@ fn main() {
     let s = String::from("hello, ");
     
     // 只修改下面这行代码 !
-    let s1 = s;
+    let mut s1 = s;
 
     s1.push_str("world")
 }
@@ -94,7 +105,7 @@ fn main() {
 fn main() {
     let x = Box::new(5);
     
-    let ...      // 完成该行代码，不要修改其它行！
+    let mut y = Box::new(0); // 完成该行代码，不要修改其它行！
     
     *y = 4;
     
@@ -149,7 +160,7 @@ fn main() {
    let _s = t.0;
 
    // 仅修改下面这行代码，且不要使用 `_s`
-   println!("{:?}", t);
+   println!("{:?}", t.1);
 }
 ```
 
@@ -160,7 +171,7 @@ fn main() {
    let t = (String::from("hello"), String::from("world"));
 
    // 填空，不要修改其它代码
-   let (__, __) = __;
+   let (ref s1, ref s2) = t;
 
    println!("{:?}, {:?}, {:?}", s1, s2, t); // -> "hello", "world", ("hello", "world")
 }

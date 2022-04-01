@@ -9,9 +9,9 @@
 /* 只使用注释让下面代码工作! */
 fn main() {
     todo!();
-    unimplemented!();
+    // unimplemented!();
 
-    assert_eq!(6, 5 + 3 + 2 + 1 )
+    // assert_eq!(6, 5 + 3 + 2 + 1 )
 }
 ```
 
@@ -156,6 +156,7 @@ pub fn div(a: i32, b: i32) -> i32 {
 /// #
 /// # }
 /// ```
+#[doc(hidden)]
 pub fn try_div(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {
         Err(String::from("Divide-by-zero"))

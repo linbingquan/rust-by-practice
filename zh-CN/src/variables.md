@@ -7,7 +7,7 @@
 
 // 修复下面代码的错误并尽可能少的修改
 fn main() {
-    let x: i32; // 未初始化，但被使用
+    let x: i32 = 5; // 未初始化，但被使用
     let y: i32; // 未初始化，也未被使用
     println!("{} is equal to 5", x); 
 }
@@ -18,8 +18,8 @@ fn main() {
 
 // 完形填空，让代码编译
 fn main() {
-    let __ =  1;
-    __ += 2; 
+    let mut x =  1;
+    x += 2; 
     
     println!("{} = 3", x); 
 }
@@ -37,7 +37,7 @@ fn main() {
         let y: i32 = 5;
         println!("x 的值是 {}, y 的值是 {}", x, y);
     }
-    println!("x 的值是 {}, y 的值是 {}", x, y); 
+    println!("x 的值是 {}", x); 
 }
 ```
 
@@ -49,8 +49,9 @@ fn main() {
     println!("{}, world", x); 
 }
 
-fn define_x() {
-    let x = "hello";
+fn define_x() -> String {
+    let x = "hello".to_string();
+    x
 }
 ```
 
@@ -64,10 +65,10 @@ fn main() {
     let x: i32 = 5;
     {
         let x = 12;
-        assert_eq!(x, 5);
+        assert_eq!(x, 12);
     }
 
-    assert_eq!(x, 12);
+    assert_eq!(x, 5);
 
     let x =  42;
     println!("{}", x); // 输出 "42".
@@ -82,7 +83,7 @@ fn main() {
     x = 7;
     // 遮蔽且再次绑定
     let x = x; 
-    x += 3;
+    // x += 3;
 
 
     let y = 4;
@@ -101,8 +102,9 @@ fn main() {
 
 ```rust,editable
 
+#![allow(unused_variables)]
 fn main() {
-    let x = 1; 
+    let _x = 1; 
 }
 
 // compiler warning: unused variable: `x`
@@ -117,7 +119,7 @@ fn main() {
 
 // 修复下面代码的错误并尽可能少的修改
 fn main() {
-    let (x, y) = (1, 2);
+    let (mut x, y) = (1, 2);
     x += 2;
 
     assert_eq!(x, 3);
@@ -139,7 +141,7 @@ fn main() {
     (x,..) = (3, 4);
     [.., y] = [1, 2];
     // 填空，让代码工作
-    assert_eq!([x,y], __);
+    assert_eq!([x,y], [3,2]);
 } 
 ```
 

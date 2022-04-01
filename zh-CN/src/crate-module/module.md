@@ -29,10 +29,20 @@
 
 ```rust,editable
 // 填空
-// in __.rs
+// in lib.rs
 
 mod front_of_house {
     // 实现此模块
+    mod hosting {
+        fn add_to_waitlist() {}
+        fn aeat_at_table() {}
+    }
+    mod serving {
+        fn take_order() {}
+        fn serve_order() {}
+        fn take_payment() {}
+        fn complain() {}
+    }
 }
 ```
 
@@ -45,16 +55,25 @@ mod front_of_house {
 // 填空并修复错误
 
 // 提示：你需要通过 `pub` 将一些项标记为公有的，这样模块 `front_of_house` 中的项才能被模块外的项访问
-mod front_of_house {
-    /* ...snip... */
+pub mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+        pub fn seat_at_table() {}
+    }
+    pub mod serving {
+        pub fn take_order() {}
+        pub fn serve_order() {}
+        pub fn take_payment() {}
+        fn complain() {} 
+    }
 }
 
 pub fn eat_at_restaurant() {
     // 使用绝对路径调用
-    __.add_to_waitlist();
+    crate::front_of_house::hosting::add_to_waitlist();
 
     // 使用相对路径调用
-     __.add_to_waitlist();
+    front_of_house::hosting::add_to_waitlist();
 }
 ```
 
@@ -68,7 +87,7 @@ mod back_of_house {
         // 使用三种方式填空
         //1. 使用关键字 `super`
         //2. 使用绝对路径
-        __.serve_order();
+        super::front_of_house::serving::serve_order();
     }
 
     fn cook_order() {}

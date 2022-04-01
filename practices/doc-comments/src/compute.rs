@@ -1,4 +1,4 @@
-//! Do some complicated arithmetic that you can't do by yourself
+//! 本模块用于处理一些复杂计算
 
 /// # Panics
 ///
@@ -8,6 +8,7 @@
 /// // panics on division by zero
 /// doc_comments::compute::div(10, 0);
 /// ```
+#[doc(hidden)]
 pub fn div(a: i32, b: i32) -> i32 {
     if b == 0 {
         panic!("Divide-by-zero error");
@@ -15,7 +16,6 @@ pub fn div(a: i32, b: i32) -> i32 {
 
     a / b
 }
-
 
 /// ```
 /// # fn try_main() -> Result<(), String> {
@@ -27,6 +27,7 @@ pub fn div(a: i32, b: i32) -> i32 {
 /// #
 /// # }
 /// ```
+#[doc(hidden)]
 pub fn try_div(a: i32, b: i32) -> Result<i32, String> {
     if b == 0 {
         Err(String::from("Divide-by-zero"))
