@@ -83,7 +83,7 @@ fn print_refs<'a, 'b>(x: &'a i32, y: &'b i32) {
 
 /* Make it work */
 fn failed_borrow<'a>() {
-    let _x = 12;
+    let _x: &i32 = &12;
 
     let y: &i32 = &_x;
 }
